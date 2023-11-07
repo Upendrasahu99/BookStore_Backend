@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using RepoLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +27,6 @@ namespace BookStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Configure Connection String
-            services.AddDbContext<BookStoreContext>(item => item.UseSqlServer(Configuration["ConnectionStrings:BookStoreDBConnection"]));
-
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -42,7 +38,6 @@ namespace BookStore
                     Description = "Book Store Api"
                 });
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
