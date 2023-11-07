@@ -10,17 +10,30 @@ namespace BusinessLayer.Service
 {
     public class UserBusiness : IUserBusiness
     {
-        private readonly IUserRepo adminRepo;
-        public UserBusiness(IUserRepo adminRepo)
+        private readonly IUserRepo userRepo;
+        public UserBusiness(IUserRepo userRepo)
         {
-            this.adminRepo = adminRepo;
+            this.userRepo = userRepo;
         }
 
         public Users RegisterUser(AdminUserRegisterModel model)
         {
             try
             {
-                return adminRepo.RegisterUser(model);
+                return userRepo.RegisterUser(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public Users UserLogin(UserLogin model)
+        {
+            try
+            {
+                return 
             }
             catch (Exception)
             {

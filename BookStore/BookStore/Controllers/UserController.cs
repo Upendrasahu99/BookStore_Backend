@@ -9,11 +9,11 @@ namespace BookStore.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserBusiness adminBusiness;
+        private readonly IUserBusiness userBusiness;
 
-        public UserController(IUserBusiness adminBusiness)
+        public UserController(IUserBusiness userBusiness)
         {
-            this.adminBusiness = adminBusiness;
+            this.userBusiness = userBusiness;
         }
 
         [HttpPost("Register")]
@@ -22,7 +22,7 @@ namespace BookStore.Controllers
         {
             try
             {
-                var result = adminBusiness.RegisterUser(mode);
+                var result = userBusiness.RegisterUser(mode);
                 if (result != null)
                 {
                     return this.Ok(new { success = true, message = "Registration successful", data = result });
