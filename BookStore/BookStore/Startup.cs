@@ -1,3 +1,5 @@
+using BusinessLayer.Interface;
+using BusinessLayer.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RepoLayer.Context;
+using RepoLayer.Interface;
+using RepoLayer.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +32,12 @@ namespace BookStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<BookStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookStoreDBConnection")));
+
             services.AddControllers();
+
+            services.AddScoped<IUserBusiness, UserBusiness>();
+            services.AddScoped<IUserRepo, UserRepo>();
 
             services.AddSwaggerGen(c =>
             {
