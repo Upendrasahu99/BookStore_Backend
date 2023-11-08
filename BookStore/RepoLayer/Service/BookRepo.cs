@@ -1,6 +1,7 @@
 ﻿using CommonLayer.Model;
 using RepoLayer.Context;
 using RepoLayer.Entity;
+using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +9,18 @@ using System.Text;
 
 namespace RepoLayer.Service
 {
-    public class BookRepo
+    public class BookRepo : IBookRepo
     {
         private readonly BookStoreContext context;
         public BookRepo(BookStoreContext context)
         {
             this.context = context;
         }
-        public Book AddBook(AddBookModel model, string email, int userId)
+        public Book AddBook(AddBookModel model, string role, string email, int userId)
         {
             try
             {
+                Users admin = context.Users.SingleOrDefault(u => u.Email == email && u.UserId == userId);
                 Book book = new Book();
                 book.Title = model.Title;
                 book.Code = model.BookCode;
@@ -31,7 +33,7 @@ namespace RepoLayer.Service
                 book.Quantity = model.Quantity;
                 context.Book.Add(book);
                 Users user = context.Users.SingleOrDefault(u => u.Email == email && u.UserId == userId);
-                return (user != null ? book : null);
+                return (admin != null ? book : null);
             }
             catch (Exception)
             {
@@ -52,5 +54,6 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+
     }
 }

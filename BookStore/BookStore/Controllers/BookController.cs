@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookStore.Controllers
 {
@@ -14,12 +16,21 @@ namespace BookStore.Controllers
         {
             this.bookBusiness = bookBusiness;
         }
+
+        [Authorize]
         [HttpPost("Add")]
-        public IActionResult AddBook(AddBookModel model, string email, int userId)
+        public IActionResult AddBook(AddBookModel model)
         {
             try
             {
-                var result = bookBusiness.AddBook(model, email, userId);
+                string role = User.FindFirst("Role").Value;
+                if(role != "Admin")
+                {
+                    return BadRequest(new { success = false, message = "You are not eligible" });
+                }
+                string email = User.FindFirst(ClaimTypes.Email).Value;
+                int userId = int.Parse(User.FindFirst("UserId").Value);
+                var result = bookBusiness.AddBook(model, role, email, userId);
                 if(result != null)
                 {
                     return Ok(new { success = true, message = "Book added successfully", result = result });

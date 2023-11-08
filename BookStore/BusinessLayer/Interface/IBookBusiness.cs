@@ -8,7 +8,7 @@ namespace BusinessLayer.Interface
 {
     public interface IBookBusiness
     {
-        public Book AddBook(AddBookModel model, string email, int userId);
+        public Book AddBook(AddBookModel model, string role, string email, int userId);
         public Book GetBook(string bookCode);
     }
 }
