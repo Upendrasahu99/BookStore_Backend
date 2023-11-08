@@ -4,6 +4,7 @@ using RepoLayer.Entity;
 using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RepoLayer.Service
@@ -39,5 +40,27 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+        public Users UserLogin(UserLoginModel model)
+        {
+            try
+            {
+                Users user = context.Users.SingleOrDefault(u => u.Email == model.Email && u.Password == model.Password);
+                if(user != null)
+                {
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
     }
 }

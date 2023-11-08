@@ -9,5 +9,6 @@ namespace RepoLayer.Interface
     public interface IUserRepo
     {
         public Users RegisterUser(AdminUserRegisterModel model);
+        public Users UserLogin(UserLoginModel model);
     }
 }

@@ -1,10 +1,14 @@
-﻿using System;
+﻿using CommonLayer.Model;
+using RepoLayer.Entity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BusinessLayer.Interface
 {
-    internal interface IBookBusiness
+    public interface IBookBusiness
     {
+        public Book AddBook(AddBookModel model, string email, int userId);
+        public Book GetBook(string bookCode);
     }
 }

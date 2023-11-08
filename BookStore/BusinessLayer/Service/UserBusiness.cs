@@ -29,11 +29,11 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Users UserLogin(UserLogin model)
+        public Users UserLogin(UserLoginModel model)
         {
             try
             {
-                return 
+                return userRepo.UserLogin(model);
             }
             catch (Exception)
             {

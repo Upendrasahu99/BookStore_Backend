@@ -4,7 +4,9 @@ using System.Text;
 
 namespace CommonLayer.Model
 {
-    internal class UserLogin
+    public class UserLoginModel
     {
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

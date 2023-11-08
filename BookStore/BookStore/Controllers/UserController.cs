@@ -38,5 +38,27 @@ namespace BookStore.Controllers
                 throw;
             }
         }
+
+        [HttpPost("Login")]
+        public IActionResult UserLogin(UserLoginModel model)
+        {
+            try
+            {
+                var result = userBusiness.UserLogin(model);
+                if(result != null)
+                {
+                    return this.Ok(new { success = true, message = "Login successful", data = result });
+                }
+                else
+                {
+                    return this.BadRequest(new { success = false, message = "Login Unsuccessful"});
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
