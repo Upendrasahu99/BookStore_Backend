@@ -45,7 +45,19 @@ namespace BookStore
                 {
                     Title = "Book Store",
                     Version = "1.0",
-                    Description = "Book Store Api"
+                    Description = "Book Store Api",
+                    TermsOfService = new Uri("https://swagger.io/specification/"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Upendra Sahu",
+                        Email = "upendrasahu1199@gmail.com",
+                        Url = new Uri("https://twitter.com/UPENDRA79252805"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Upendra Sahu",
+                        Url = new Uri("https://github.com/Upendrasahu99"),
+                    },
                 });
             });
         }
