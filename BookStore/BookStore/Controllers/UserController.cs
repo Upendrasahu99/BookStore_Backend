@@ -80,5 +80,24 @@ namespace BookStore.Controllers
                 throw;
             }
         }
+
+        [HttpPost("Forgot")]
+        public IActionResult ForgotPassword(string email)
+        {
+            try
+            {
+                var result = userBusiness.ForgotPassword(email);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Token send", result = result });
+                }
+                return BadRequest(new { success = false, message = "Email not found" });
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

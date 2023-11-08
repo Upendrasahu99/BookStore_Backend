@@ -10,5 +10,6 @@ namespace RepoLayer.Interface
     {
         public Users RegisterUser(AdminUserRegisterModel model, string role);
         public string UserLogin(UserLoginModel model);
+        public string ForgotPassword(string email);
     }
 }

@@ -65,6 +65,29 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+
+        public string ForgotPassword(string email)
+        {
+            try
+            {
+                Users user = context.Users.SingleOrDefault(u => u.Email == email);
+                if(user != null)
+                {
+                    return GenerateToken(user.Email, user.UserId, user.Role);
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
+
+
         public string GenerateToken(string email, int userId, string role)
         {
             List<Claim> claimData = new List<Claim>()
@@ -86,6 +109,5 @@ namespace RepoLayer.Service
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
         }
-
     }
 }
