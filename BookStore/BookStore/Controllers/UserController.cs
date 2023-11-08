@@ -27,14 +27,10 @@ namespace BookStore.Controllers
                 {
                     return this.Ok(new { success = true, message = "Registration successful", data = result });
                 }
-                else
-                {
                     return this.BadRequest(new { success = false, message = "Registration unsuccessful" });
-                }
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }
