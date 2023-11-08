@@ -1,10 +1,14 @@
 ﻿using CommonLayer.Model;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RepoLayer.Context;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 
 namespace RepoLayer.Service
@@ -12,13 +16,14 @@ namespace RepoLayer.Service
     public class UserRepo : IUserRepo
     {
         private readonly BookStoreContext context;
-
-        public UserRepo(BookStoreContext context)
+        private readonly IConfiguration configuration;
+        public UserRepo(BookStoreContext context, IConfiguration configuration)
         {
             this.context = context;
+            this.configuration = configuration;
         }
 
-        public Users RegisterUser(AdminUserRegisterModel model)
+        public Users RegisterUser(AdminUserRegisterModel model, string role)
         {
             try
             {
@@ -29,7 +34,7 @@ namespace RepoLayer.Service
                 users.MobileNum = model.MobileNum;
                 users.Email = model.Email;
                 users.Password = model.Password;
-                users.Role = model.Role;
+                users.Role = role;
                 context.Users.Add(users);
                 context.SaveChanges();
                 return users;
@@ -40,14 +45,14 @@ namespace RepoLayer.Service
                 throw;
             }
         }
-        public Users UserLogin(UserLoginModel model)
+        public string UserLogin(UserLoginModel model)
         {
             try
             {
                 Users user = context.Users.SingleOrDefault(u => u.Email == model.Email && u.Password == model.Password);
                 if(user != null)
                 {
-                    return user;
+                    return GenerateToken(user.Email, user.UserId, user.Role);
                 }
                 else
                 {
@@ -60,7 +65,27 @@ namespace RepoLayer.Service
                 throw;
             }
         }
-
+        public string GenerateToken(string email, int userId, string role)
+        {
+            List<Claim> claimData = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Email, email),
+                new Claim("UserId", userId.ToString()),
+                new Claim("Role", role),
+            };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSetting:SecretKey"]));
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                issuer: configuration["JwtSetting:Issuer"],
+                audience: configuration["JwtSetting:Audience"],
+                claims: claimData,
+                notBefore: DateTime.Now,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: cred
+                );
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            return jwt;
+        }
 
     }
 }

@@ -16,11 +16,11 @@ namespace BusinessLayer.Service
             this.userRepo = userRepo;
         }
 
-        public Users RegisterUser(AdminUserRegisterModel model)
+        public Users RegisterUser(AdminUserRegisterModel model, string role)
         {
             try
             {
-                return userRepo.RegisterUser(model);
+                return userRepo.RegisterUser(model, role);
             }
             catch (Exception)
             {
@@ -29,7 +29,7 @@ namespace BusinessLayer.Service
             }
         }
 
-        public Users UserLogin(UserLoginModel model)
+        public string UserLogin(UserLoginModel model)
         {
             try
             {

@@ -1,7 +1,9 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BookStore.Controllers
 {
@@ -16,13 +18,14 @@ namespace BookStore.Controllers
             this.userBusiness = userBusiness;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("RegisterUser")]
 
-        public IActionResult UserRegister(AdminUserRegisterModel mode)
+        public IActionResult UserRegister(AdminUserRegisterModel model)
         {
             try
             {
-                var result = userBusiness.RegisterUser(mode);
+                string role = "User";
+                var result = userBusiness.RegisterUser(model, role);
                 if (result != null)
                 {
                     return this.Ok(new { success = true, message = "Registration successful", data = result });
@@ -43,12 +46,33 @@ namespace BookStore.Controllers
                 var result = userBusiness.UserLogin(model);
                 if(result != null)
                 {
-                    return this.Ok(new { success = true, message = "Login successful", data = result });
+                    return Ok(new { success = true, message = "Login successful", data = result });
                 }
-                else
+                    return BadRequest(new { success = false, message = "Login Unsuccessful"});
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+        [Authorize]
+        [HttpPost("AdminReg")]
+        public IActionResult AdminRegister(AdminUserRegisterModel model)
+        {
+            try
+            {
+                int adminId = int.Parse(User.FindFirst("UserId").Value);
+                if(adminId != 2)
                 {
-                    return this.BadRequest(new { success = false, message = "Login Unsuccessful"});
+                    return BadRequest(new { message = "You are not authorize for this" });
                 }
+                string role = "Admin";
+                var result = userBusiness.RegisterUser(model, role);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "Admin registration successful", result = result });
+                }
+                return BadRequest(new { success = false, message = "Admin registration unsuccessful" });
             }
             catch (System.Exception)
             {

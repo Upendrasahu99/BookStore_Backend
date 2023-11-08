@@ -44,59 +44,36 @@ namespace BookStore
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                var securitySchema = new OpenApiSecurityScheme
                 {
-                    Title = "Book Store",
-                    Version = "1.0",
-                    Description = "Book Store Api",
-                    TermsOfService = new Uri("https://swagger.io/specification/"),
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Upendra Sahu",
-                        Email = "upendrasahu1199@gmail.com",
-                        Url = new Uri("https://twitter.com/UPENDRA79252805"),
-                    },
-                    License = new OpenApiLicense
-                    {
-                        Name = "Upendra Sahu",
-                        Url = new Uri("https://github.com/Upendrasahu99"),
-                    },
-                });
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                {
+                    Description = "Using the Authorization header with Bearer scheme",
                     Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Description = "JWT Authorization header using the Bearer scheme."
-                });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] {}
+                        Type = ReferenceType.SecurityScheme,
+                        Id = JwtBearerDefaults.AuthenticationScheme
                     }
-                });
+                };
+                c.AddSecurityDefinition(securitySchema.Reference.Id, securitySchema);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement { {
+                    securitySchema, Array.Empty<string>()}});
             });
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
                         ValidateLifetime = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSetting:SecretKey"]))
                     };
                 });
