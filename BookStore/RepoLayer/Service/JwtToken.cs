@@ -27,15 +27,15 @@ namespace RepoLayer.Service
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSetting:SecretKey"]));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
-                issuer : "",
-                audience :"",
+                issuer : configuration["JwtSetting:Issuer"],
+                audience : configuration["JwtSetting:Audience"],
                 claims : claimData,
                 notBefore : DateTime.Now,
                 expires : DateTime.Now.AddMinutes(30),
                 signingCredentials : cred
                 );
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-            return 
+            return jwt;
         }
     }
 }
