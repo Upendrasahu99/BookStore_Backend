@@ -6,9 +6,9 @@ using System.Text;
 
 namespace RepoLayer.Interface
 {
-    public interface IUserRepo
+    public interface IBookRepo
     {
-        public Users RegisterUser(AdminUserRegisterModel model);
-        public Users UserLogin(UserLoginModel model);
+        public Book AddBook(AddBookModel model, string email, int userId);
+        public Book GetBook(string bookCode);
     }
 }

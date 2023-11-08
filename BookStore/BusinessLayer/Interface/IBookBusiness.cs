@@ -6,9 +6,9 @@ using System.Text;
 
 namespace BusinessLayer.Interface
 {
-    public interface IUserBusiness
+    public interface IBookBusiness
     {
-        public Users RegisterUser(AdminUserRegisterModel model);
-        public Users UserLogin(UserLoginModel model);
+        public Book AddBook(AddBookModel model, string email, int userId);
+        public Book GetBook(string bookCode);
     }
 }
