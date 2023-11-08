@@ -11,5 +11,6 @@ namespace BusinessLayer.Interface
         public Users RegisterUser(AdminUserRegisterModel model, string role);
         public string UserLogin(UserLoginModel model);
         public string ForgotPassword(string email);
+        public Users ResetPassword(string email, string newPassword, string confirmPassword);
     }
 }

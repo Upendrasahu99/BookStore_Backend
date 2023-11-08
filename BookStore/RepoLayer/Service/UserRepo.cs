@@ -85,7 +85,25 @@ namespace RepoLayer.Service
         }
 
 
+        public Users ResetPassword(string email, string newPassword, string confirmPassword)
+        {
+            try
+            {
+                Users user = context.Users.SingleOrDefault(u => u.Email == email);
+                if(user != null && newPassword == confirmPassword)
+                {
+                   user.Password = newPassword;
+                   context.SaveChanges();
+                   return user;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
 
 
         public string GenerateToken(string email, int userId, string role)

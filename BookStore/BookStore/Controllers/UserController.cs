@@ -99,5 +99,25 @@ namespace BookStore.Controllers
                 throw;
             }
         }
+        [Authorize]
+        [HttpPut("Reset")]
+        public IActionResult ResetPassword(string newPassword, string confirmPassword)
+        {
+            try
+            {
+                string email = User.FindFirst(ClaimTypes.Email).Value;
+                string role;
+                var result = userBusiness.ResetPassword(email, newPassword, confirmPassword);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Reset password successful", result = result });
+                }
+                return BadRequest(new { success = false, message = "Reset password unsuccessful"});
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
     }
 }

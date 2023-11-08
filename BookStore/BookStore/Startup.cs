@@ -35,13 +35,15 @@ namespace BookStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Database Configuration
             services.AddDbContext<BookStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookStoreDBConnection")));
 
             services.AddControllers();
 
             services.AddScoped<IUserBusiness, UserBusiness>();
             services.AddScoped<IUserRepo, UserRepo>();
-
+            
+            //Swagger Configuration
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -64,7 +66,7 @@ namespace BookStore
                     securitySchema, Array.Empty<string>()}});
             });
 
-
+            //Jwt Configuration
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
