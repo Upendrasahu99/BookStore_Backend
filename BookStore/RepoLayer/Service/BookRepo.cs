@@ -41,7 +41,7 @@ namespace RepoLayer.Service
                 book.Price = model.Price;
                 book.PageCount = model.PageCount;
                 book.Image = model.Image;
-                book.Quantity = model.Quantity;
+                book.Stock = model.Stock;
                 context.Book.Add(book);
                 context.SaveChanges();
                 return (book != null ? model : null);
@@ -91,7 +91,7 @@ namespace RepoLayer.Service
                     book.Price = model.Price;
                     book.PageCount = model.PageCount;
                     book.Image = model.Image;
-                    book.Quantity = model.Quantity;
+                    book.Stock = model.Stock;
                     context.SaveChanges();
                     return book;
                 }
@@ -150,7 +150,7 @@ namespace RepoLayer.Service
                     book.Price = model.Price;
                     book.PageCount = model.PageCount;
                     book.Image = model.Image;
-                    book.Quantity = model.Quantity;
+                    book.Stock = model.Stock;
                     bookList.Add(book);
                 }
                 

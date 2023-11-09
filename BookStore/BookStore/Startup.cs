@@ -43,9 +43,12 @@ namespace BookStore
             services.AddScoped<IUserBusiness, UserBusiness>();
             services.AddScoped<IUserRepo, UserRepo>();
             
-
             services.AddScoped<IBookBusiness, BookBusiness>();
             services.AddScoped<IBookRepo, BookRepo>();
+
+            services.AddScoped<IOrderBusiness, OrderBusiness>();
+            services.AddScoped<IOrderRepo, OrderRepo>();
+            
             //Swagger Configuration
             services.AddSwaggerGen(c =>
             {
