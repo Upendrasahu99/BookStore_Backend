@@ -63,5 +63,30 @@ namespace BookStore.Controllers
                 throw;
             }
         }
+
+        [Authorize]
+        [HttpPut("Update")]
+        public IActionResult UpdateBook(int bookId, AddBookModel model)
+        {
+            try
+            {
+                string role = User.FindFirst("Role").Value;
+                if(role != "Admin" )
+                {
+                    return BadRequest(new { success = false, message = "You are not eligible" });
+                }
+                var result = bookBusiness.UpdateBook(bookId, model);
+                if(result != null)
+                {
+                    return Ok(new { sucess = true, message = "Book data updated", result = result });
+                }
+                return BadRequest(new { success = false, message = "Book not updated" });
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
