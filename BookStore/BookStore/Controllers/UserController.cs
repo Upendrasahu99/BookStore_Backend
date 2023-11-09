@@ -55,7 +55,7 @@ namespace BookStore.Controllers
                 throw;
             }
         }
-        [Authorize]
+        [Authorize ]
         [HttpPost("AdminReg")]
         public IActionResult AdminRegister(AdminUserRegisterModel model)
         {
@@ -106,7 +106,6 @@ namespace BookStore.Controllers
             try
             {
                 string email = User.FindFirst(ClaimTypes.Email).Value;
-                string role;
                 var result = userBusiness.ResetPassword(email, newPassword, confirmPassword);
                 if (result != null)
                 {

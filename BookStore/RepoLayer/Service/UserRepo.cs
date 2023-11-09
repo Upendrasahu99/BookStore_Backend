@@ -112,7 +112,7 @@ namespace RepoLayer.Service
             {
                 new Claim(ClaimTypes.Email, email),
                 new Claim("UserId", userId.ToString()),
-                new Claim("Role", role),
+                new Claim(ClaimTypes.Role, role),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSetting:SecretKey"]));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
