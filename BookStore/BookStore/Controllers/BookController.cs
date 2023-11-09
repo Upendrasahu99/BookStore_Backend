@@ -44,12 +44,13 @@ namespace BookStore.Controllers
             }
         }
 
+
         [HttpGet("Get")]
-        public IActionResult GetBook(string bookCode)
+        public IActionResult GetBook(int bookId)
         {
             try
             {
-                var result = bookBusiness.GetBook(bookCode);
+                var result = bookBusiness.GetBook(bookId);
                 if( result != null )
                 {
                     return Ok(new { success = true, message = "Book found", result = result});

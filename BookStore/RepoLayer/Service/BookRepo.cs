@@ -32,6 +32,7 @@ namespace RepoLayer.Service
                 book.Image = model.Image;
                 book.Quantity = model.Quantity;
                 context.Book.Add(book);
+                context.SaveChanges();
                 Users user = context.Users.SingleOrDefault(u => u.Email == email && u.UserId == userId);
                 return (admin != null ? book : null);
             }
@@ -41,11 +42,11 @@ namespace RepoLayer.Service
             }
         }
 
-        public Book GetBook(string bookCode)
+        public Book GetBook(int BookId)
         {
             try
             {
-                Book book = context.Book.SingleOrDefault(u => u.Code == bookCode);
+                Book book = context.Book.SingleOrDefault(u => u.BookId == BookId);
                 return book != null ? book : null;
             }
             catch (Exception)

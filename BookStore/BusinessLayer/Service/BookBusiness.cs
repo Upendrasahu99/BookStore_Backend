@@ -27,11 +27,11 @@ namespace BusinessLayer.Service
 				throw;
 			}
         }
-        public Book GetBook(string bookCode)
+        public Book GetBook(int BookId)
 		{
 			try
 			{
-				return bookRepo.GetBook(bookCode);
+				return bookRepo.GetBook(BookId);
 			}
 			catch (Exception)
 			{
