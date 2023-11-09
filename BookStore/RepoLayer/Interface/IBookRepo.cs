@@ -16,7 +16,7 @@ namespace RepoLayer.Interface
         /// </summary>
         /// <param name="model">Provide data</param>
         /// <returns>return book data</returns>
-        public Book AddBook(AddBookModel model);
+        public AddBookModel AddBook(AddBookModel model);
         /// <summary>
         /// For get book detail
         /// </summary>
@@ -40,6 +40,6 @@ namespace RepoLayer.Interface
         /// For get all the book
         /// </summary>
         /// <returns>All the book data</returns>
-        public List<Book> GetAllBook();
+        public List<AddBookModel> GetAllBook();
     }
 }

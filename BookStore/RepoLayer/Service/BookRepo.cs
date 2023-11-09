@@ -28,7 +28,7 @@ namespace RepoLayer.Service
         /// </summary>
         /// <param name="model">For adding book data</param>
         /// <returns>Book data which we added in database</returns>
-        public Book AddBook(AddBookModel model)
+        public AddBookModel AddBook(AddBookModel model)
         {
             try
             {
@@ -44,8 +44,7 @@ namespace RepoLayer.Service
                 book.Quantity = model.Quantity;
                 context.Book.Add(book);
                 context.SaveChanges();
-
-                return (book != null ? book : null);
+                return (book != null ? model : null);
             }
             catch (Exception)
             {
@@ -135,13 +134,29 @@ namespace RepoLayer.Service
         /// For get all book data from database
         /// </summary>
         /// <returns>All book data from database</returns>
-        public List<Book> GetAllBook()
+        public List<AddBookModel> GetAllBook()
         {
             try
             {
+                List<AddBookModel> bookList = new List<AddBookModel>();
+                foreach(var model in context.Book)
+                {
+                    AddBookModel book = new AddBookModel();
+                    book.Title = model.Title;
+                    book.BookCode = model.Code;
+                    book.Author = model.Author;
+                    book.Language = model.Language;
+                    book.Publisher = model.Publisher;
+                    book.Price = model.Price;
+                    book.PageCount = model.PageCount;
+                    book.Image = model.Image;
+                    book.Quantity = model.Quantity;
+                    bookList.Add(book);
+                }
+                
                 if(context.Book.Count() > 0)
                 {
-                    return context.Book.ToList();
+                    return bookList;
                 } 
                 return null;
             }

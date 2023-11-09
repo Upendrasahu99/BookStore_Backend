@@ -16,7 +16,7 @@ namespace BusinessLayer.Interface
         /// </summary>
         /// <param name="model">For providing the book data</param>
         /// <returns>It return the book detail we added in database</returns>
-        public Book AddBook(AddBookModel model);
+        public AddBookModel AddBook(AddBookModel model);
         /// <summary>
         /// abstract method for get the book detail
         /// </summary>
@@ -40,6 +40,6 @@ namespace BusinessLayer.Interface
         /// For get all book 
         /// </summary>
         /// <returns>return the all book data</returns>
-        public List<Book> GetAllBook();
+        public List<AddBookModel> GetAllBook();
     }
 }

@@ -30,7 +30,7 @@ namespace BusinessLayer.Service
 		/// </summary>
 		/// <param name="model">Provide the data enter in book table</param>
 		/// <returns>return book data which we enter in book table</returns>
-        public Book AddBook(AddBookModel model)
+        public AddBookModel AddBook(AddBookModel model)
         {
 			try
 			{
@@ -99,7 +99,7 @@ namespace BusinessLayer.Service
 		/// Implement all book detail
 		/// </summary>
 		/// <returns>return all book data</returns>
-        public List<Book> GetAllBook()
+        public List<AddBookModel> GetAllBook()
 		{
 			try
 			{

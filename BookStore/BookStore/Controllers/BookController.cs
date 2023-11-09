@@ -27,8 +27,6 @@ namespace BookStore.Controllers
         {
             try
             {
-                string email = User.FindFirst(ClaimTypes.Email).Value;
-                int userId = int.Parse(User.FindFirst("UserId").Value);
                 var result = bookBusiness.AddBook(model);
                 if (result != null)
                 {
@@ -48,7 +46,7 @@ namespace BookStore.Controllers
         /// </summary>
         /// <param name="bookId">Using bookId we get particular book.</param>
         /// <returns></returns>
-        [HttpGet("Get.{bookId}")]
+        [HttpGet("Get/{bookId}")]
         public IActionResult GetBook(int bookId)
         {
             try

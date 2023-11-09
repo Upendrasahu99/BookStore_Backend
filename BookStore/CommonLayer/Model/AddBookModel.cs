@@ -14,7 +14,7 @@ namespace CommonLayer.Model
         public string Language { get; set; }
         public string Publisher { get; set; }
         public decimal? Price { get; set; }
-        public int PageCount { get; set; }
+        public int? PageCount { get; set; }
         public string Image { get; set; }
         public int? Quantity { get; set; }
 
