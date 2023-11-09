@@ -16,7 +16,7 @@ namespace BookStore.Controllers
             this.orderBusiness = orderBusiness;
         }
 
-        [Authorize (Roles = "User")]
+        [Authorize]
         [HttpPost("PlaceOrder/{bookId}/{addressId}")]
         public IActionResult PlaceOrder(OrderBookModel orderBookModel, int bookId, int addressId)
         {

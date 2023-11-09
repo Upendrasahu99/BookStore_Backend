@@ -34,12 +34,6 @@ namespace RepoLayer.Context
             {
                 entity.Property(e => e.AddressId).HasColumnName("Address_Id");
 
-                entity.Property(e => e.Address1)
-                    .IsRequired()
-                    .HasColumnName("Address")
-                    .HasMaxLength(300)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.City)
                     .IsRequired()
                     .HasMaxLength(50)
@@ -49,6 +43,11 @@ namespace RepoLayer.Context
                     .IsRequired()
                     .HasColumnName("country")
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FullAddress)
+                    .IsRequired()
+                    .HasMaxLength(300)
                     .IsUnicode(false);
 
                 entity.Property(e => e.PinCode)

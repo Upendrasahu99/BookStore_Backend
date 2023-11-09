@@ -35,6 +35,7 @@ namespace RepoLayer.Service
 				orderData.UserId = userId;
 				orderData.BookId = bookId;
 				orderData.AddressId = AddressId;
+				book.Stock = book.Stock - model.Quantity;
 				context.Add(orderData);
 				context.SaveChanges();
 				if(orderData != null)
@@ -73,6 +74,7 @@ namespace RepoLayer.Service
 					orderDetail.Price = book.Price;
 					orderDetail.Image = book.Image;
 					orderDetail.Quantity = order.Quantity;
+					orderDetail.Amount = order.Amount;
 					orderDetail.DateTime = order.DateTime;
 					orderDetail.City = address.City;
 					orderDetail.PinCode = address.PinCode;

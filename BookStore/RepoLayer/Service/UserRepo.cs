@@ -105,7 +105,6 @@ namespace RepoLayer.Service
             }
         }
 
-
         public string GenerateToken(string email, int userId, string role)
         {
             List<Claim> claimData = new List<Claim>()
