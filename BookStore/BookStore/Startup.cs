@@ -88,6 +88,13 @@ namespace BookStore
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtSetting:SecretKey"]))
                     };
                 });
+
+            services.AddLogging(config =>
+            { 
+                config.AddConfiguration(Configuration.GetSection("Logging"));
+                config.ClearProviders();
+                config.AddConsole();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

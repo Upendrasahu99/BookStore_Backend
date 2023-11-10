@@ -23,12 +23,14 @@ namespace BookStore.Controllers
         }
 
         [HttpPost("RegisterUser")]
-
         public IActionResult UserRegister(AdminUserRegisterModel model)
         {
             try
             {
                 string role = "User";
+                int a  = 1;
+                int b = 0;
+                int id = a / b;
                 var result = userBusiness.RegisterUser(model, role);
                 if (result != null)
                 {
@@ -38,7 +40,7 @@ namespace BookStore.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error come in UserController UserRegistration method");
+                logger.LogError(ex,ex.Message, "Error come in UserController UserRegistration method");
                 return StatusCode(500, "Internal Server Error");
             }
         }
