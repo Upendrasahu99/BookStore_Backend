@@ -13,11 +13,8 @@ namespace RepoLayer.Entity
         public int? BookId { get; set; }
         public int? AddressId { get; set; }
         public int Quantity { get; set; }
-        [JsonIgnore]
         public virtual Address Address { get; set; }
-        [JsonIgnore]
         public virtual Book Book { get; set; }
-        [JsonIgnore]
         public virtual Users User { get; set; }
     }
 }

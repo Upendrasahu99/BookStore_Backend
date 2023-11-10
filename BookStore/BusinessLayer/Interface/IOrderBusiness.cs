@@ -12,5 +12,6 @@ namespace BusinessLayer.Interface
         public OrderData PlaceOrder(OrderBookModel model, int userId, int bookId, int AddressId);
         public OrderDetailReturn OrderDetail(int orderId);
         public List<OrderDetailReturn> GetAllOrder(int userId);
+        public OrderDetailReturn CancelOrder(int orderId, int userId);
     }
 }

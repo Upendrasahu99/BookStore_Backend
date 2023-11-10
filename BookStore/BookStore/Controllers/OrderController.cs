@@ -25,11 +25,11 @@ namespace BookStore.Controllers
                 int userId = int.Parse(User.FindFirst("UserId").Value);
 
                 var result = orderBusiness.PlaceOrder(orderBookModel, userId, bookId, addressId);
-                if(result != null)
+                if (result != null)
                 {
                     return Ok(new { success = true, message = "Order placed", result = result });
                 }
-                return BadRequest(new { success = false, message = "Order not placed", result = result});
+                return BadRequest(new { success = false, message = "Order not placed", result = result });
             }
             catch (System.Exception)
             {
@@ -37,14 +37,14 @@ namespace BookStore.Controllers
             }
         }
 
-        [Authorize (Roles = "User")]
+        [Authorize(Roles = "User")]
         [HttpGet("GetOrder/{orderId}")]
         public IActionResult GetOrderDetail(int orderId)
         {
             try
             {
                 var result = orderBusiness.OrderDetail(orderId);
-                if(result != null )
+                if (result != null)
                 {
                     return Ok(new { success = true, message = "Order Detail", result = result });
                 }
@@ -57,19 +57,40 @@ namespace BookStore.Controllers
             }
         }
 
-        [Authorize (Roles = "User")]
+        [Authorize(Roles = "User")]
         [HttpGet("GetAllOrder")]
         public IActionResult GetAllOrder()
         {
             try
             {
-                int userId = int.Parse(User.FindFirst("userId").Value);
+                int userId = int.Parse(User.FindFirst("UserId").Value);
                 var result = orderBusiness.GetAllOrder(userId);
-                if(result != null)
+                if (result != null)
                 {
                     return Ok(new { success = true, message = "All Orders", result = result });
                 }
                 return BadRequest(new { success = false, message = "There is not orders placed in past" });
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpDelete("CancelOrder/{orderId}")]
+        public IActionResult CancelOrder(int orderId)
+        {
+            try
+            {
+                int userId = int.Parse(User.FindFirst("UserId").Value);
+                var result = orderBusiness.CancelOrder(orderId, userId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Order cancel successfully", result = result });
+                }
+                return BadRequest(new { success = false, message = "Order not canceled" });
             }
             catch (System.Exception)
             {

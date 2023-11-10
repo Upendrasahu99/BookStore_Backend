@@ -54,5 +54,18 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
+
+        public OrderDetailReturn CancelOrder(int orderId, int userId)
+        {
+			try
+			{
+				return orderRepo.CancelOrder(orderId, userId);
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+		}
     }
 }

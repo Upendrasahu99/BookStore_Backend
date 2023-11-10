@@ -54,7 +54,6 @@ namespace RepoLayer.Service
 		{
 			try
 			{
-
 				OrderData order = context.OrderData.SingleOrDefault(u => u.OrderId == orderId);
 				if (order != null && order.UserId != null && order.AddressId != null && order.BookId != null)
 				{
@@ -118,6 +117,40 @@ namespace RepoLayer.Service
 			}
 			catch (Exception)
 			{
+				throw;
+			}
+		}
+
+		public OrderDetailReturn CancelOrder(int orderId, int userId)
+		{
+			try
+			{
+				OrderData order = context.OrderData.SingleOrDefault(u => u.OrderId == orderId && u.UserId == userId);
+				if (order != null) 
+				{
+					context.OrderData.Remove(order);
+					context.SaveChanges();
+					OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
+                    Book book = context.Book.SingleOrDefault(u => u.BookId == order.BookId);
+                    Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
+                    orderDetailReturn.Title = book.Title;
+                    orderDetailReturn.BookCode = book.Code;
+                    orderDetailReturn.Price = book.Price;
+                    orderDetailReturn.Image = book.Image;
+                    orderDetailReturn.Quantity = order.Quantity;
+                    orderDetailReturn.Amount = order.Amount;
+                    orderDetailReturn.DateTime = order.DateTime;
+                    orderDetailReturn.FullAddress = address.FullAddress;
+                    orderDetailReturn.City = address.City;
+                    orderDetailReturn.PinCode = address.PinCode;
+                    orderDetailReturn.State = address.State;
+					return orderDetailReturn;
+				}
+				return null;
+			}
+			catch (Exception)
+			{
+
 				throw;
 			}
 		}
