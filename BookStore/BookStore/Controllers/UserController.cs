@@ -3,6 +3,9 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Net;
 using System.Security.Claims;
 
 namespace BookStore.Controllers
@@ -12,10 +15,11 @@ namespace BookStore.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserBusiness userBusiness;
-
-        public UserController(IUserBusiness userBusiness)
+        private readonly ILogger<UserController> logger;
+        public UserController(IUserBusiness userBusiness, ILogger<UserController> logger)
         {
             this.userBusiness = userBusiness;
+            this.logger = logger;
         }
 
         [HttpPost("RegisterUser")]
@@ -28,13 +32,14 @@ namespace BookStore.Controllers
                 var result = userBusiness.RegisterUser(model, role);
                 if (result != null)
                 {
-                    return this.Ok(new { success = true, message = "Registration successful", data = result });
+                    return Ok(new { success = true, message = "Registration successful", data = result });
                 }
-                    return this.BadRequest(new { success = false, message = "Registration unsuccessful" });
+                    return BadRequest(new { success = false, message = "Registration unsuccessful" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                logger.LogError(ex, "Error come in UserController UserRegistration method");
+                return StatusCode(500, "Internal Server Error");
             }
         }
 

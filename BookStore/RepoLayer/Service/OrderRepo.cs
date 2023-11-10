@@ -37,8 +37,8 @@ namespace RepoLayer.Service
 				orderData.AddressId = AddressId;
 				book.Stock = book.Stock - model.Quantity;
 				context.Add(orderData);
-				context.SaveChanges();
-				if(orderData != null)
+				int row = context.SaveChanges();
+				if(row > 0)
 				{
 					return orderData;
 				}
@@ -54,6 +54,7 @@ namespace RepoLayer.Service
 		{
 			try
 			{
+
 				OrderData order = context.OrderData.SingleOrDefault(u => u.OrderId == orderId);
 				if (order != null && order.UserId != null && order.AddressId != null && order.BookId != null)
 				{
@@ -61,32 +62,62 @@ namespace RepoLayer.Service
 					Book book = context.Book.SingleOrDefault(u => u.BookId == order.BookId);
 					Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
 
-					OrderDetailReturn orderDetail = new OrderDetailReturn();
-					orderDetail.FirstName = user.FirstName;
-					orderDetail.LastName = user.LastName;
-					orderDetail.MobileNum = user.MobileNum;
-					orderDetail.Email = user.Email;
-					orderDetail.Title = book.Title;
-					orderDetail.BookCode = book.Code;
-					orderDetail.Author = book.Author;
-					orderDetail.Language = book.Language;
-					orderDetail.Publisher = book.Publisher;
-					orderDetail.Price = book.Price;
-					orderDetail.Image = book.Image;
-					orderDetail.Quantity = order.Quantity;
-					orderDetail.Amount = order.Amount;
-					orderDetail.DateTime = order.DateTime;
-					orderDetail.City = address.City;
-					orderDetail.PinCode = address.PinCode;
-					orderDetail.State = address.State;
-					orderDetail.Country = address.Country;
-					return orderDetail;
+					OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
+					orderDetailReturn.Title = book.Title;
+					orderDetailReturn.BookCode = book.Code;
+					orderDetailReturn.Price = book.Price;
+					orderDetailReturn.Image = book.Image;
+					orderDetailReturn.Quantity = order.Quantity;
+					orderDetailReturn.Amount = order.Amount;
+					orderDetailReturn.DateTime = order.DateTime;
+					orderDetailReturn.FullAddress = address.FullAddress;
+					orderDetailReturn.City = address.City;
+					orderDetailReturn.PinCode = address.PinCode;
+					orderDetailReturn.State = address.State;
+					return orderDetailReturn;
 				}
 				return null;
 			}
 			catch (Exception)
 			{
+				throw;
+			}
+		}
 
+		public List<OrderDetailReturn> GetAllOrder(int userId)
+		{
+			try
+			{
+
+                List<OrderDetailReturn> allOrderDetail = new List<OrderDetailReturn>();
+				var allOrder = context.OrderData.Where(u => u.UserId == userId).ToList();
+                foreach (var order in allOrder)
+				{
+					OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
+					Book book = context.Book.SingleOrDefault(u => u.BookId == order.BookId);
+					Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
+					orderDetailReturn.Title = book.Title;
+					orderDetailReturn.BookCode = book.Code;
+					orderDetailReturn.Price = book.Price;
+					orderDetailReturn.Image = book.Image;
+					orderDetailReturn.Quantity= order.Quantity;
+					orderDetailReturn.Amount = order.Amount;
+					orderDetailReturn.DateTime = order.DateTime;
+					orderDetailReturn.FullAddress = address.FullAddress;
+					orderDetailReturn.City = address.City;
+					orderDetailReturn.PinCode = address.PinCode;
+					orderDetailReturn.State = address.State;
+					allOrderDetail.Add(orderDetailReturn);
+				}
+				if(allOrderDetail.Count == 0)
+				{
+					return null;
+				}
+				return allOrderDetail;
+
+			}
+			catch (Exception)
+			{
 				throw;
 			}
 		}

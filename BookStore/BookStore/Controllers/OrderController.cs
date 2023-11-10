@@ -56,5 +56,26 @@ namespace BookStore.Controllers
                 throw;
             }
         }
+
+        [Authorize (Roles = "User")]
+        [HttpGet("GetAllOrder")]
+        public IActionResult GetAllOrder()
+        {
+            try
+            {
+                int userId = int.Parse(User.FindFirst("userId").Value);
+                var result = orderBusiness.GetAllOrder(userId);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "All Orders", result = result });
+                }
+                return BadRequest(new { success = false, message = "There is not orders placed in past" });
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

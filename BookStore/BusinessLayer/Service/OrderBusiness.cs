@@ -41,5 +41,18 @@ namespace BusinessLayer.Service
 				throw;
 			}
 		}
+
+        public List<OrderDetailReturn> GetAllOrder(int userId)
+		{
+			try
+			{
+				return orderRepo.GetAllOrder(userId);
+			}
+			catch (Exception)
+			{
+
+				throw;
+			}
+		}
     }
 }
