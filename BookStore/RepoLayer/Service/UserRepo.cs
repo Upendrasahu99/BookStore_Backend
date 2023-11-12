@@ -26,7 +26,7 @@ namespace RepoLayer.Service
         public Users RegisterUser(AdminUserRegisterModel model, string role)
         {
             try
-            {
+            { 
                 Users users = new Users();
                 users.FirstName = model.FirstName;
                 users.LastName = model.LastName;

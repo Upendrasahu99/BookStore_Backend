@@ -20,6 +20,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using NLog.Web;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using System.Diagnostics;
 
 namespace BookStore
 {
@@ -90,10 +95,11 @@ namespace BookStore
                 });
 
             services.AddLogging(config =>
-            { 
-                config.AddConfiguration(Configuration.GetSection("Logging"));
+            {
                 config.ClearProviders();
                 config.AddConsole();
+                //Unable NLog as one of the logging provider
+                config.AddNLog();
             });
         }
 

@@ -4,6 +4,8 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace BookStore.Controllers
 {
@@ -12,9 +14,11 @@ namespace BookStore.Controllers
     public class AddressController : ControllerBase
     {
         private readonly IAddressBusiness addressBusiness;
-        public AddressController(IAddressBusiness addressBusiness)
+        private readonly ILogger logger;
+        public AddressController(IAddressBusiness addressBusiness, ILogger logger)
         {
             this.addressBusiness = addressBusiness;
+            this.logger = logger;
         }
 
         [Authorize]
@@ -31,10 +35,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Address not added" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
     }

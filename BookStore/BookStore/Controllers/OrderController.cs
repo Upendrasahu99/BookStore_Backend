@@ -3,6 +3,8 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace BookStore.Controllers
 {
@@ -11,9 +13,11 @@ namespace BookStore.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderBusiness orderBusiness;
-        public OrderController(IOrderBusiness orderBusiness)
+        private readonly ILogger logger;
+        public OrderController(IOrderBusiness orderBusiness, ILogger logger)
         {
             this.orderBusiness = orderBusiness;
+            this.logger = logger;
         }
 
         [Authorize]
@@ -31,9 +35,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Order not placed", result = result });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -50,10 +55,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Not able to find any order" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -71,10 +76,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "There is not orders placed in past" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -92,10 +97,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Order not canceled" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
     }

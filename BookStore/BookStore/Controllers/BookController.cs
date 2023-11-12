@@ -3,6 +3,8 @@ using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Security.Claims;
 
 namespace BookStore.Controllers
@@ -12,9 +14,11 @@ namespace BookStore.Controllers
     public class BookController : ControllerBase
     {
         private readonly IBookBusiness bookBusiness;
-        public BookController(IBookBusiness bookBusiness)
+        private readonly ILogger logger;
+        public BookController(IBookBusiness bookBusiness, ILogger logger)
         {
             this.bookBusiness = bookBusiness;
+            this.logger = logger;
         }
         /// <summary>
         /// Action method for add book by admin only.
@@ -34,10 +38,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Book not added" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -58,10 +62,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Book not found" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -84,10 +88,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Book not updated" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -109,10 +113,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Book not deleted" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
         /// <summary>
@@ -131,10 +135,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "There is not a single book" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
     }

@@ -22,15 +22,20 @@ namespace BookStore.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("RegisterUser")]
         public IActionResult UserRegister(AdminUserRegisterModel model)
         {
             try
             {
+                int a = 0;
+                int b = 1;
+                int c = b / a;
                 string role = "User";
-                int a  = 1;
-                int b = 0;
-                int id = a / b;
                 var result = userBusiness.RegisterUser(model, role);
                 if (result != null)
                 {
@@ -40,7 +45,7 @@ namespace BookStore.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex,ex.Message, "Error come in UserController UserRegistration method");
+                logger.LogError(ex,ex.Message);
                 return StatusCode(500, "Internal Server Error");
             }
         }
@@ -57,9 +62,10 @@ namespace BookStore.Controllers
                 }
                     return BadRequest(new { success = false, message = "Login Unsuccessful"});
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
         [Authorize ]
@@ -81,10 +87,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Admin registration unsuccessful" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
@@ -100,10 +106,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Email not found" });
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
         [Authorize]
@@ -120,9 +126,10 @@ namespace BookStore.Controllers
                 }
                 return BadRequest(new { success = false, message = "Reset password unsuccessful"});
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                throw;
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
             }
         }
     }
