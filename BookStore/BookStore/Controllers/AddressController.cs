@@ -14,8 +14,8 @@ namespace BookStore.Controllers
     public class AddressController : ControllerBase
     {
         private readonly IAddressBusiness addressBusiness;
-        private readonly ILogger logger;
-        public AddressController(IAddressBusiness addressBusiness, ILogger logger)
+        private readonly ILogger<AddressController> logger;
+        public AddressController(IAddressBusiness addressBusiness, ILogger<AddressController> logger)
         {
             this.addressBusiness = addressBusiness;
             this.logger = logger;

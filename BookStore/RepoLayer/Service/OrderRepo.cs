@@ -112,7 +112,7 @@ namespace RepoLayer.Service
 				var allOrder = context.OrderData.Where(u => u.UserId == userId).ToList();
                 foreach (var order in allOrder)
 				{
-					OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
+					/*OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
 					Book book = context.Book.SingleOrDefault(u => u.BookId == order.BookId);
 					Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
 					orderDetailReturn.Title = book.Title;
@@ -124,8 +124,8 @@ namespace RepoLayer.Service
 					orderDetailReturn.FullAddress = address.FullAddress;
 					orderDetailReturn.City = address.City;
 					orderDetailReturn.PinCode = address.PinCode;
-					orderDetailReturn.State = address.State;
-					allOrderDetail.Add(orderDetailReturn);
+					orderDetailReturn.State = address.State;*/
+					allOrderDetail.Add(OrderDetail(order.OrderId));
 				}
 				if(allOrderDetail.Count == 0)
 				{
