@@ -23,6 +23,12 @@ namespace RepoLayer.Service
             this.configuration = configuration;
         }
 
+        /// <summary>
+        /// Implement functionality for RegisterUser where it register the user and admin detail.
+        /// </summary>
+        /// <param name="model">Enter user data</param>
+        /// <param name="role">Claim role admin from jwt token</param>
+        /// <returns>return users detail after registration</returns>
         public Users RegisterUser(AdminUserRegisterModel model, string role)
         {
             try
@@ -45,6 +51,12 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+
+        /// <summary>
+        /// Implement user login functionality where it check user detail which enter by user with  database data.
+        /// </summary>
+        /// <param name="model">enter email and password</param>
+        /// <returns>return token</returns>
         public string UserLogin(UserLoginModel model)
         {
             try
@@ -66,6 +78,11 @@ namespace RepoLayer.Service
             }
         }
 
+        /// <summary>
+        /// Implement forgot password functionality where it check mail which enter by user with database table user table email column.
+        /// </summary>
+        /// <param name="email">user email for check user in database or not</param>
+        /// <returns>return  jwt token</returns>
         public string ForgotPassword(string email)
         {
             try
@@ -84,7 +101,13 @@ namespace RepoLayer.Service
             }
         }
 
-
+        /// <summary>
+        /// Implement reset password functionality for user where it take email from jwt token match with database data than add new password.
+        /// </summary>
+        /// <param name="email">email for check user is valid or not</param>
+        /// <param name="newPassword">new password</param>
+        /// <param name="confirmPassword">for confirm enter password</param>
+        /// <returns>return user detail</returns>
         public Users ResetPassword(string email, string newPassword, string confirmPassword)
         {
             try
@@ -105,6 +128,13 @@ namespace RepoLayer.Service
             }
         }
 
+        /// <summary>
+        /// Method Generate JWt Token 
+        /// </summary>
+        /// <param name="email">In claim add email</param>
+        /// <param name="userId">In claim add userId</param>
+        /// <param name="role">In claim add role</param>
+        /// <returns>return jwt token in string format</returns>
         public string GenerateToken(string email, int userId, string role)
         {
             List<Claim> claimData = new List<Claim>()

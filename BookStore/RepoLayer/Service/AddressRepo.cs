@@ -18,11 +18,11 @@ namespace RepoLayer.Service
         }
 
         /// <summary>
-        /// 
+        /// Method Implement AddAddress method where it add the the address of user and admin in Address table using Address and BookStore Context class.
         /// </summary>
-        /// <param name="addressModel"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="addressModel">Address detail</param>
+        /// <param name="userId">We claim from token for add address for particular user</param>
+        /// <returns>Address Model after successfully register</returns>
         public Address AddAddress(AddAddressModel addressModel, int userId)
         {
             try

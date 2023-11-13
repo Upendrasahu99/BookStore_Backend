@@ -25,6 +25,8 @@ namespace RepoLayer.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BookStore;Trusted_Connection=True;");
             }
         }
 
@@ -171,11 +173,6 @@ namespace RepoLayer.Context
                     .IsRequired()
                     .HasColumnName("First_Name")
                     .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Gender)
-                    .IsRequired()
-                    .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.LastName)

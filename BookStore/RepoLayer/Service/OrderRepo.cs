@@ -18,7 +18,15 @@ namespace RepoLayer.Service
 		{
 			this.context = context;
 		}
-		public OrderRepo() { }
+
+        /// <summary>
+        /// Method is implementing place order functionality which store the data in database when we place the order
+        /// </summary>
+        /// <param name="model">Enter requirement and detail for place order</param>
+        /// <param name="userId">claim from Jwt token when user login</param>
+        /// <param name="bookId">For choose for particular book</param>
+        /// <param name="AddressId">For choose particular address of user</param>
+        /// <returns>After placing order return order data</returns>
 		public OrderData PlaceOrder(OrderBookModel model, int userId, int bookId, int AddressId)
 		{
 			try
@@ -50,7 +58,12 @@ namespace RepoLayer.Service
 			}
 		}
 
-		public OrderDetailReturn OrderDetail(int orderId)
+        /// <summary>
+        /// Method is implemented OrderDetail functionality for which get the order detail from database.
+        /// </summary>
+        /// <param name="orderId">For particular orderId</param>
+        /// <returns>Order detail</returns>
+        public OrderDetailReturn OrderDetail(int orderId)
 		{
 			try
 			{
@@ -83,7 +96,12 @@ namespace RepoLayer.Service
 			}
 		}
 
-		public List<OrderDetailReturn> GetAllOrder(int userId)
+        /// <summary>
+        /// Method for implementation for GetAll Order detail functionality where it get detail of all order from database which placed by user
+        /// </summary>
+        /// <param name="userId">claim from Jwt token when user login</param>
+        /// <returns>Return all order detail</returns>
+        public List<OrderDetailReturn> GetAllOrder(int userId)
 		{
 			try
 			{
@@ -121,7 +139,14 @@ namespace RepoLayer.Service
 			}
 		}
 
-		public OrderDetailReturn CancelOrder(int orderId, int userId)
+
+        /// <summary>
+        /// Method is implemented Cancel order functionality we delete the order detail form database.
+        /// </summary>
+        /// <param name="orderId">for chose particular order</param>
+        /// <param name="userId">claim from Jwt token when user login</param>
+        /// <returns>Cancel order detail</returns>
+        public OrderDetailReturn CancelOrder(int orderId, int userId)
 		{
 			try
 			{
