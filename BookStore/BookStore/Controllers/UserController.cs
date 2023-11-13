@@ -57,7 +57,7 @@ namespace BookStore.Controllers
         {
             try
             {
-                var result = userBusiness.UserLogin(model);
+                var result = userBusiness.UserAdminLogin(model);
                 if(result != null)
                 {
                     return Ok(new { success = true, message = "Login successful", data = result });

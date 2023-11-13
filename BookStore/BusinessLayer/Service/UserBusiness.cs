@@ -45,11 +45,11 @@ namespace BusinessLayer.Service
         /// </summary>
         /// <param name="model">enter email and password</param>
         /// <returns>return token</returns>
-        public string UserLogin(UserLoginModel model)
+        public UserAdminLoginReturn UserAdminLogin(UserLoginModel model)
         {
             try
             {
-                return userRepo.UserLogin(model);
+                return userRepo.UserAdminLogin(model);
             }
             catch (Exception)
             {

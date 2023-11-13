@@ -57,14 +57,17 @@ namespace RepoLayer.Service
         /// </summary>
         /// <param name="model">enter email and password</param>
         /// <returns>return token</returns>
-        public string UserLogin(UserLoginModel model)
+        public UserAdminLoginReturn UserAdminLogin(UserLoginModel model)
         {
             try
             {
                 Users user = context.Users.SingleOrDefault(u => u.Email == model.Email && u.Password == model.Password);
                 if(user != null)
                 {
-                    return GenerateToken(user.Email, user.UserId, user.Role);
+                    UserAdminLoginReturn userAdminLoginReturn = new UserAdminLoginReturn();
+                    userAdminLoginReturn.UserDetailReturn = UserAdminDetail(user.UserId);//From UserAdminDetail method get detail
+                    userAdminLoginReturn.Token = GenerateToken(user.Email, user.UserId, user.Role);
+                    return userAdminLoginReturn;
                 }
                 else
                 {

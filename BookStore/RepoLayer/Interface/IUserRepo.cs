@@ -22,7 +22,7 @@ namespace RepoLayer.Interface
         /// </summary>
         /// <param name="model">enter email and password</param>
         /// <returns>return token</returns>
-        public string UserLogin(UserLoginModel model);
+        public UserAdminLoginReturn UserAdminLogin(UserLoginModel model);
 
         /// <summary>
         /// Functionality for Forgot password
