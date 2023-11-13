@@ -111,7 +111,7 @@ namespace RepoLayer.Service
         /// <param name="newPassword">new password</param>
         /// <param name="confirmPassword">for confirm enter password</param>
         /// <returns>return user detail</returns>
-        public Users ResetPassword(string email, string newPassword, string confirmPassword)
+        public UserDetailReturn ResetPassword(string email, string newPassword, string confirmPassword)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace RepoLayer.Service
                 {
                    user.Password = newPassword;
                    context.SaveChanges();
-                   return user;
+                   return UserAdminDetail(user.UserId);//Get detail of user
                 }
                 return null;
             }
@@ -131,6 +131,11 @@ namespace RepoLayer.Service
             }
         }
 
+        /// <summary>
+        /// Method for get user detail from database
+        /// </summary>
+        /// <param name="userId">for select particular user</param>
+        /// <returns>user detail</returns>
         public UserDetailReturn UserAdminDetail(int userId)
         {
             try

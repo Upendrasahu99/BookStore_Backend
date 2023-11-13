@@ -39,6 +39,6 @@ namespace BusinessLayer.Interface
         /// <param name="newPassword">new password</param>
         /// <param name="confirmPassword">for confirm enter password</param>
         /// <returns>return user detail</returns>
-        public Users ResetPassword(string email, string newPassword, string confirmPassword);
+        public UserDetailReturn ResetPassword(string email, string newPassword, string confirmPassword);
     }
 }
