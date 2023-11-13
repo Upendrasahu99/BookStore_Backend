@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using CommonLayer.ReturnModel;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
 using System;
@@ -26,7 +27,7 @@ namespace BusinessLayer.Service
         /// <param name="model">Enter user data</param>
         /// <param name="role">Claim role admin from jwt token</param>
         /// <returns>return users detail after registration</returns>
-        public Users RegisterUser(AdminUserRegisterModel model, string role)
+        public UserDetailReturn RegisterUser(AdminUserRegisterModel model, string role)
         {
             try
             {

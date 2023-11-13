@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Model;
+using CommonLayer.ReturnModel;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RepoLayer.Context;
@@ -29,7 +30,7 @@ namespace RepoLayer.Service
         /// <param name="model">Enter user data</param>
         /// <param name="role">Claim role admin from jwt token</param>
         /// <returns>return users detail after registration</returns>
-        public Users RegisterUser(AdminUserRegisterModel model, string role)
+        public UserDetailReturn RegisterUser(AdminUserRegisterModel model, string role)
         {
             try
             { 
@@ -42,7 +43,7 @@ namespace RepoLayer.Service
                 users.Role = role;
                 context.Users.Add(users);
                 context.SaveChanges();
-                return users;
+                return UserAdminDetail(users.UserId);
             }
             catch (Exception)
             {
@@ -117,6 +118,29 @@ namespace RepoLayer.Service
                    user.Password = newPassword;
                    context.SaveChanges();
                    return user;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public UserDetailReturn UserAdminDetail(int userId)
+        {
+            try
+            {
+                Users user = context.Users.SingleOrDefault(u => u.UserId == userId);
+                if(user != null)
+                {
+                    UserDetailReturn userDetailReturn = new UserDetailReturn();
+                    userDetailReturn.FirstName = user.FirstName;
+                    userDetailReturn.LastName = user.LastName;
+                    userDetailReturn.MobileNum = user.MobileNum;
+                    userDetailReturn.Password = user.Password;
+                    return userDetailReturn;
                 }
                 return null;
             }

@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Model;
+using CommonLayer.ReturnModel;
 using RepoLayer.Entity;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace BusinessLayer.Interface
         /// <param name="model">Enter user data</param>
         /// <param name="role">Claim role admin from jwt token</param>
         /// <returns>return users detail after registration</returns>
-        public Users RegisterUser(AdminUserRegisterModel model, string role);
+        public UserDetailReturn RegisterUser(AdminUserRegisterModel model, string role);
 
         /// <summary>
         /// Functionality for user and admin login

@@ -133,7 +133,7 @@ namespace RepoLayer.Service
         /// </summary>
         /// <param name="orderId">for chose particular order</param>
         /// <param name="userId">claim from Jwt token when user login</param>
-        /// <returns>Cancel order detail</returns>
+        /// <returns>Cancel order detail from OrderDetail method</returns>
         public OrderDetailReturn CancelOrder(int orderId, int userId)
 		{
 			try
@@ -144,26 +144,12 @@ namespace RepoLayer.Service
 					OrderDetailReturn orderDetailReturn = OrderDetail(orderId);
 					context.OrderData.Remove(order);
 					context.SaveChanges();
-				/*	OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
-                    Book book = context.Book.SingleOrDefault(u => u.BookId == order.BookId);
-                    Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
-                    orderDetailReturn.Title = book.Title;
-                    orderDetailReturn.BookCode = book.Code;
-					orderDetailReturn.Price = book.Price;
-                    orderDetailReturn.Quantity = order.Quantity;
-                    orderDetailReturn.Amount = order.Amount;
-                    orderDetailReturn.DateTime = order.DateTime;
-                    orderDetailReturn.FullAddress = address.FullAddress;
-                    orderDetailReturn.City = address.City;
-                    orderDetailReturn.PinCode = address.PinCode;
-                    orderDetailReturn.State = address.State;*/
 					return orderDetailReturn;
 				}
 				return null;
 			}
 			catch (Exception)
 			{
-
 				throw;
 			}
 		}
