@@ -16,6 +16,13 @@ namespace RepoLayer.Service
         {
             this.context = context;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="addressModel"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public Address AddAddress(AddAddressModel addressModel, int userId)
         {
             try

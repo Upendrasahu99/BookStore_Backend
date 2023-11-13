@@ -21,6 +21,11 @@ namespace BookStore.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// For add address of user and admin
+        /// </summary>
+        /// <param name="addressModel">For enter the address detail</param>
+        /// <returns>Http status with message and result if result is not null</returns>
         [Authorize]
         [HttpPost("AddAddress")]
         public IActionResult AddAddress(AddAddressModel addressModel)

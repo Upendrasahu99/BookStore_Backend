@@ -8,6 +8,9 @@ using System.Text;
 
 namespace BusinessLayer.Service
 {
+	/// <summary>
+	/// Implement IAddAddress Interface
+	/// </summary>
     public class AddressBusiness : IAddressBusiness
     {
 		private readonly IAddressRepo addressRepo;
@@ -15,6 +18,13 @@ namespace BusinessLayer.Service
 		{
 			this.addressRepo = addressRepo;
 		}
+
+		/// <summary>
+		/// Implement AddAddress method and call repolayer addAddress Method
+		/// </summary>
+		/// <param name="addressModel"></param>
+		/// <param name="userId"></param>
+		/// <returns></returns>
         public Address AddAddress(AddAddressModel addressModel, int userId)
         {
 			try

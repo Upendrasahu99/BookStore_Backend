@@ -22,19 +22,16 @@ namespace BookStore.Controllers
             this.logger = logger;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+       /// <summary>
+       /// Action method is for user Registration where it calling userBusiness RegisterUser method
+       /// </summary>
+       /// <param name="model">Enter the data for user detail</param>
+       /// <returns>Http status with message and result if success is true</returns>
         [HttpPost("RegisterUser")]
         public IActionResult UserRegister(AdminUserRegisterModel model)
         {
             try
             {
-                int a = 0;
-                int b = 1;
-                int c = b / a;
                 string role = "User";
                 var result = userBusiness.RegisterUser(model, role);
                 if (result != null)
@@ -50,6 +47,11 @@ namespace BookStore.Controllers
             }
         }
 
+        /// <summary>
+        /// Action method is for user Login where it calling UserBusiness UerLogin method
+        /// </summary>
+        /// <param name="model">Enter user email and password</param>
+        /// <returns>Http status with message and result if success is true</returns>
         [HttpPost("Login")]
         public IActionResult UserLogin(UserLoginModel model)
         {
@@ -68,6 +70,12 @@ namespace BookStore.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        /// <summary>
+        /// Action method is for user AdminRegistration  where it calling UserBusiness  RegisterUser method
+        /// </summary>
+        /// <param name="model">Enter admin data</param>
+        /// <returns>Http status with message and result if success is true</returns>
         [Authorize ]
         [HttpPost("AdminReg")]
         public IActionResult AdminRegister(AdminUserRegisterModel model)
@@ -94,6 +102,11 @@ namespace BookStore.Controllers
             }
         }
 
+        /// <summary>
+        /// For Forgot password for user and admin both where it calling UserBusiness ForgotPassword method
+        /// </summary>
+        /// <param name="email">For send toke if email in our database</param>
+        /// <returns>Http status with message and result if success is true</returns>
         [HttpPost("Forgot")]
         public IActionResult ForgotPassword(string email)
         {
@@ -112,6 +125,13 @@ namespace BookStore.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        /// <summary>
+        /// For Reset password where it calling UserBusiness ResetPassword method.
+        /// </summary>
+        /// <param name="newPassword">Enter new password</param>
+        /// <param name="confirmPassword">For Confirmation of password</param>
+        /// <returns>Http status with message and result if success is true</returns>
         [Authorize]
         [HttpPut("Reset")]
         public IActionResult ResetPassword(string newPassword, string confirmPassword)

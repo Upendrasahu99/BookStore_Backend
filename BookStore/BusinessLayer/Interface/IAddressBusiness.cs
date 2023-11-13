@@ -8,6 +8,12 @@ namespace BusinessLayer.Interface
 {
     public interface IAddressBusiness
     {
+        /// <summary>
+        /// Functionality for add address for user and admin both
+        /// </summary>
+        /// <param name="addressModel">Enter the address detail</param>
+        /// <param name="userId">claim from Jwt token when user login</param>
+        /// <returns>return the detail of Address which added</returns>
         public Address AddAddress(AddAddressModel addressModel, int userId);
     }
 }

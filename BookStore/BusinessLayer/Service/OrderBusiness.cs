@@ -9,6 +9,10 @@ using System.Text;
 
 namespace BusinessLayer.Service
 {
+
+	/// <summary>
+	/// Implement IOrderBusiness
+	/// </summary>
     public class OrderBusiness : IOrderBusiness
     {
 		private readonly IOrderRepo orderRepo;
@@ -16,6 +20,15 @@ namespace BusinessLayer.Service
 		{
 			this.orderRepo = orderRepo;
 		}
+
+        /// <summary>
+        /// Implement PlaceOrder method
+        /// </summary>
+        /// <param name="model">Enter requirement and detail for place order</param>
+        /// <param name="userId">claim from Jwt token when user login</param>
+        /// <param name="bookId">For choose for particular book</param>
+        /// <param name="AddressId">For choose particular address of user</param>
+        /// <returns>After placing order return order data</returns>
         public OrderData PlaceOrder(OrderBookModel model, int userId, int bookId, int AddressId)
         {
 			try
@@ -29,6 +42,12 @@ namespace BusinessLayer.Service
 			}
         }
 
+
+        /// <summary>
+        /// Implement OrderDetail method
+        /// </summary>
+        /// <param name="orderId">For particular orderId</param>
+        /// <returns>Order detail</returns>
         public OrderDetailReturn OrderDetail(int orderId)
 		{
 			try
@@ -42,6 +61,11 @@ namespace BusinessLayer.Service
 			}
 		}
 
+        /// <summary>
+        /// Implement GetAllOrder method
+        /// </summary>
+        /// <param name="userId">claim from Jwt token when user login</param>
+        /// <returns>Return all order detail</returns>
         public List<OrderDetailReturn> GetAllOrder(int userId)
 		{
 			try
@@ -55,6 +79,12 @@ namespace BusinessLayer.Service
 			}
 		}
 
+        /// <summary>
+        /// Implement CancelOrder method
+        /// </summary>
+        /// <param name="orderId">for chose particular order</param>
+        /// <param name="userId">claim from Jwt token when user login</param>
+        /// <returns>Cancel order detail</returns>
         public OrderDetailReturn CancelOrder(int orderId, int userId)
         {
 			try

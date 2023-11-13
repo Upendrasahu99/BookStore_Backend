@@ -20,6 +20,13 @@ namespace BookStore.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// For place new Order where user only able to place order
+        /// </summary>
+        /// <param name="orderBookModel">For Enter the order detail</param>
+        /// <param name="bookId">For chose book</param>
+        /// <param name="addressId">For Chose one address of user</param>
+        /// <returns>Http status with message and result if success is true</returns>
         [Authorize]
         [HttpPost("PlaceOrder/{bookId}/{addressId}")]
         public IActionResult PlaceOrder(OrderBookModel orderBookModel, int bookId, int addressId)
@@ -42,6 +49,12 @@ namespace BookStore.Controllers
             }
         }
 
+
+        /// <summary>
+        /// For Order Detail
+        /// </summary>
+        /// <param name="orderId">For chose one order</param>
+        /// <returns>Http status with message and result if success is true</returns>
         [Authorize(Roles = "User")]
         [HttpGet("GetOrder/{orderId}")]
         public IActionResult GetOrderDetail(int orderId)
@@ -62,6 +75,10 @@ namespace BookStore.Controllers
             }
         }
 
+        /// <summary>
+        /// For get all order detail
+        /// </summary>
+        /// <returns>Http status with message and result if result is not null</returns>
         [Authorize(Roles = "User")]
         [HttpGet("GetAllOrder")]
         public IActionResult GetAllOrder()
@@ -83,6 +100,11 @@ namespace BookStore.Controllers
             }
         }
 
+        /// <summary>
+        /// For cancel order
+        /// </summary>
+        /// <param name="orderId">For select one order</param>
+        /// <returns>Http status with message and result if result is not null</returns>
         [Authorize(Roles = "User")]
         [HttpDelete("CancelOrder/{orderId}")]
         public IActionResult CancelOrder(int orderId)
