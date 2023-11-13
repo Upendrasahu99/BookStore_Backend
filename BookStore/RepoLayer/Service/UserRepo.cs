@@ -36,7 +36,6 @@ namespace RepoLayer.Service
                 Users users = new Users();
                 users.FirstName = model.FirstName;
                 users.LastName = model.LastName;
-                users.Gender = model.Gender;
                 users.MobileNum = model.MobileNum;
                 users.Email = model.Email;
                 users.Password = model.Password;

@@ -17,7 +17,7 @@ namespace BusinessLayer.Interface
         /// <param name="bookId">For choose for particular book</param>
         /// <param name="AddressId">For choose particular address of user</param>
         /// <returns>After placing order return order data</returns>
-        public OrderData PlaceOrder(OrderBookModel model, int userId, int bookId, int AddressId);
+        public OrderDetailReturn PlaceOrder(OrderBookModel model, int userId, int bookId, int AddressId);
 
         /// <summary>
         /// For get order detail

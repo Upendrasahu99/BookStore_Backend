@@ -10,6 +10,9 @@ using System.Text;
 
 namespace RepoLayer.Service
 {
+	/// <summary>
+	/// Implemented IOrderRepo abstract method
+	/// </summary>
     public class OrderRepo : IOrderRepo
     {
 		private readonly BookStoreContext context;
@@ -27,7 +30,7 @@ namespace RepoLayer.Service
         /// <param name="bookId">For choose for particular book</param>
         /// <param name="AddressId">For choose particular address of user</param>
         /// <returns>After placing order return order data</returns>
-		public OrderData PlaceOrder(OrderBookModel model, int userId, int bookId, int AddressId)
+		public OrderDetailReturn PlaceOrder(OrderBookModel model, int userId, int bookId, int AddressId)
 		{
 			try
 			{
@@ -48,7 +51,7 @@ namespace RepoLayer.Service
 				int row = context.SaveChanges();
 				if(row > 0)
 				{
-					return orderData;
+					return OrderDetail(orderData.OrderId);
 				}
 				return null;
 			}
@@ -68,17 +71,16 @@ namespace RepoLayer.Service
 			try
 			{
 				OrderData order = context.OrderData.SingleOrDefault(u => u.OrderId == orderId);
-				if (order != null && order.UserId != null && order.AddressId != null && order.BookId != null)
+				if (order != null)
 				{
-					Users user = context.Users.SingleOrDefault(u => u.UserId == order.UserId);
 					Book book = context.Book.SingleOrDefault(u => u.BookId == order.BookId);
 					Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
 
 					OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
+					orderDetailReturn.OrderId = orderId;
 					orderDetailReturn.Title = book.Title;
 					orderDetailReturn.BookCode = book.Code;
 					orderDetailReturn.Price = book.Price;
-					orderDetailReturn.Image = book.Image;
 					orderDetailReturn.Quantity = order.Quantity;
 					orderDetailReturn.Amount = order.Amount;
 					orderDetailReturn.DateTime = order.DateTime;
@@ -116,7 +118,6 @@ namespace RepoLayer.Service
 					orderDetailReturn.Title = book.Title;
 					orderDetailReturn.BookCode = book.Code;
 					orderDetailReturn.Price = book.Price;
-					orderDetailReturn.Image = book.Image;
 					orderDetailReturn.Quantity= order.Quantity;
 					orderDetailReturn.Amount = order.Amount;
 					orderDetailReturn.DateTime = order.DateTime;
@@ -160,8 +161,7 @@ namespace RepoLayer.Service
                     Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
                     orderDetailReturn.Title = book.Title;
                     orderDetailReturn.BookCode = book.Code;
-                    orderDetailReturn.Price = book.Price;
-                    orderDetailReturn.Image = book.Image;
+					orderDetailReturn.Price = book.Price;
                     orderDetailReturn.Quantity = order.Quantity;
                     orderDetailReturn.Amount = order.Amount;
                     orderDetailReturn.DateTime = order.DateTime;
