@@ -112,19 +112,6 @@ namespace RepoLayer.Service
 				var allOrder = context.OrderData.Where(u => u.UserId == userId).ToList();
                 foreach (var order in allOrder)
 				{
-					/*OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
-					Book book = context.Book.SingleOrDefault(u => u.BookId == order.BookId);
-					Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
-					orderDetailReturn.Title = book.Title;
-					orderDetailReturn.BookCode = book.Code;
-					orderDetailReturn.Price = book.Price;
-					orderDetailReturn.Quantity= order.Quantity;
-					orderDetailReturn.Amount = order.Amount;
-					orderDetailReturn.DateTime = order.DateTime;
-					orderDetailReturn.FullAddress = address.FullAddress;
-					orderDetailReturn.City = address.City;
-					orderDetailReturn.PinCode = address.PinCode;
-					orderDetailReturn.State = address.State;*/
 					allOrderDetail.Add(OrderDetail(order.OrderId));
 				}
 				if(allOrderDetail.Count == 0)
@@ -154,9 +141,10 @@ namespace RepoLayer.Service
 				OrderData order = context.OrderData.SingleOrDefault(u => u.OrderId == orderId && u.UserId == userId);
 				if (order != null) 
 				{
+					OrderDetailReturn orderDetailReturn = OrderDetail(orderId);
 					context.OrderData.Remove(order);
 					context.SaveChanges();
-					OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
+				/*	OrderDetailReturn orderDetailReturn = new OrderDetailReturn();
                     Book book = context.Book.SingleOrDefault(u => u.BookId == order.BookId);
                     Address address = context.Address.SingleOrDefault(u => u.AddressId == order.AddressId);
                     orderDetailReturn.Title = book.Title;
@@ -168,7 +156,7 @@ namespace RepoLayer.Service
                     orderDetailReturn.FullAddress = address.FullAddress;
                     orderDetailReturn.City = address.City;
                     orderDetailReturn.PinCode = address.PinCode;
-                    orderDetailReturn.State = address.State;
+                    orderDetailReturn.State = address.State;*/
 					return orderDetailReturn;
 				}
 				return null;
