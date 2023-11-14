@@ -43,9 +43,9 @@ namespace BookStore
 
             services.AddControllers();
 
-            services.AddScoped<IUserBusiness, UserBusiness>();
+            services.AddSingleton<IUserBusiness, UserBusiness>();
             services.AddScoped<IUserRepo, UserRepo>();
-            
+
             services.AddScoped<IBookBusiness, BookBusiness>();
             services.AddScoped<IBookRepo, BookRepo>();
 
@@ -54,28 +54,51 @@ namespace BookStore
 
             services.AddScoped<IAddressBusiness, AddressBusiness>();
             services.AddScoped<IAddressRepo, AddressRepo>();
-            
+
             //Swagger Configuration
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(option =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-                var securitySchema = new OpenApiSecurityScheme
+                option.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "Using the Authorization header with Bearer scheme",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer",
+                    Scheme = "Bearer",//Jwt format is Bearer
                     BearerFormat = "JWT",
-                    Reference = new OpenApiReference
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Description = "Bearer Authentication with JWT Token",
+                    Type = SecuritySchemeType.Http,
+                });
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
                     {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = JwtBearerDefaults.AuthenticationScheme
-                    }
-                };
-                c.AddSecurityDefinition(securitySchema.Reference.Id, securitySchema);
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement { {
-                    securitySchema, Array.Empty<string>()}});
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        },
+                         new List<string>()
+                    },
+                });
+                /* var securitySchema = new OpenApiSecurityScheme
+                 {
+                     Description = "Using the Authorization header with Bearer scheme",
+                     Name = "Authorization",
+                     In = ParameterLocation.Header,
+                     Type = SecuritySchemeType.Http,
+                     Scheme = "bearer",
+                     BearerFormat = "JWT",
+                     Reference = new OpenApiReference
+                     {
+                         Type = ReferenceType.SecurityScheme,
+                         Id = JwtBearerDefaults.AuthenticationScheme
+                     }
+                 };
+                 option.AddSecurityDefinition(securitySchema.Reference.Id, securitySchema);
+                 option.AddSecurityRequirement(new OpenApiSecurityRequirement { {
+                     securitySchema, Array.Empty<string>()}});*/
             });
 
             //Jwt Configuration
