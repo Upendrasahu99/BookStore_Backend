@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Model;
+using CommonLayer.ReturnModel;
 using RepoLayer.Context;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
@@ -28,7 +29,7 @@ namespace RepoLayer.Service
         /// </summary>
         /// <param name="model">For adding book data</param>
         /// <returns>Book data which we added in database</returns>
-        public AddBookModel AddBook(AddBookModel model)
+        public BookDetailReturnModel AddBook(AddBookModel model)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace RepoLayer.Service
                 book.Stock = model.Stock;
                 context.Book.Add(book);
                 context.SaveChanges();
-                return (book != null ? model : null);
+                return (book != null ? GetBook(book.BookId) : null);
             }
             catch (Exception)
             {
@@ -57,12 +58,27 @@ namespace RepoLayer.Service
         /// </summary>
         /// <param name="BookId">Accessing particular book</param>
         /// <returns>Book data from database</returns>
-        public Book GetBook(int BookId)
+        public BookDetailReturnModel GetBook(int BookId)
         {
             try
             {
                 Book book = context.Book.SingleOrDefault(u => u.BookId == BookId);
-                return book != null ? book : null;
+                if(book != null)
+                {
+                    BookDetailReturnModel bookDetailReturnModel = new BookDetailReturnModel();
+                    bookDetailReturnModel.BookId = book.BookId;
+                    bookDetailReturnModel.Title = book.Title;
+                    bookDetailReturnModel.BookCode = book.Code;
+                    bookDetailReturnModel.Author = book.Author;
+                    bookDetailReturnModel.Language = book.Language;
+                    bookDetailReturnModel.Publisher = book.Publisher;
+                    bookDetailReturnModel.Price = book.Price;
+                    bookDetailReturnModel.PageCount = book.PageCount;
+                    bookDetailReturnModel.Image = book.Image;
+                    bookDetailReturnModel.Stock = book.Stock;
+                    return bookDetailReturnModel;
+                }
+                return null;
             }
             catch (Exception)
             {
@@ -76,7 +92,7 @@ namespace RepoLayer.Service
         /// <param name="BookId">Accessing particular book</param>
         /// <param name="model">For enter the data</param>
         /// <returns>Updated book data from database</returns>
-        public Book UpdateBook(int BookId, AddBookModel model)
+        public BookDetailReturnModel UpdateBook(int BookId, AddBookModel model)
         {
             try
             {
@@ -93,14 +109,13 @@ namespace RepoLayer.Service
                     book.Image = model.Image;
                     book.Stock = model.Stock;
                     context.SaveChanges();
-                    return book;
+                    return GetBook(book.BookId);
                 }
                 return null;
 
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -110,7 +125,7 @@ namespace RepoLayer.Service
         /// </summary>
         /// <param name="bookId">accessing particular book</param>
         /// <returns>Deleted book data from database</returns>
-        public Book DeleteBook(int bookId)
+        public BookDetailReturnModel DeleteBook(int bookId)
         {
             try
             {
@@ -119,7 +134,7 @@ namespace RepoLayer.Service
                 {
                     context.Book.Remove(book);
                     context.SaveChanges();
-                    return book;
+                    return GetBook(book.BookId);
                 }
                 return null;
             }
@@ -134,24 +149,15 @@ namespace RepoLayer.Service
         /// For get all book data from database
         /// </summary>
         /// <returns>All book data from database</returns>
-        public List<AddBookModel> GetAllBook()
+        public List<BookDetailReturnModel> GetAllBook()
         {
             try
             {
-                List<AddBookModel> bookList = new List<AddBookModel>();
-                foreach(var model in context.Book)
+                List<BookDetailReturnModel> bookList = new List<BookDetailReturnModel>();
+                var allBook = context.Book.ToList(); //FIrst covert in list not direct put in foreach beause it give error
+                foreach(var model in allBook)
                 {
-                    AddBookModel book = new AddBookModel();
-                    book.Title = model.Title;
-                    book.BookCode = model.Code;
-                    book.Author = model.Author;
-                    book.Language = model.Language;
-                    book.Publisher = model.Publisher;
-                    book.Price = model.Price;
-                    book.PageCount = model.PageCount;
-                    book.Image = model.Image;
-                    book.Stock = model.Stock;
-                    bookList.Add(book);
+                    bookList.Add(GetBook(model.BookId));
                 }
                 
                 if(context.Book.Count() > 0)

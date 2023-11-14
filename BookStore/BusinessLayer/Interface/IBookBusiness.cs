@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Model;
+using CommonLayer.ReturnModel;
 using RepoLayer.Entity;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,14 @@ namespace BusinessLayer.Interface
         /// </summary>
         /// <param name="model">For providing the book data</param>
         /// <returns>It return the book detail we added in database</returns>
-        public AddBookModel AddBook(AddBookModel model);
+        public BookDetailReturnModel AddBook(AddBookModel model);
 
         /// <summary>
         /// abstract method for get the book detail
         /// </summary>
         /// <param name="BookId">For particular book</param>
         /// <returns>return the particular book data</returns>
-        public Book GetBook(int BookId);
+        public BookDetailReturnModel GetBook(int BookId);
 
         /// <summary>
         /// For update the book data.
@@ -31,19 +32,19 @@ namespace BusinessLayer.Interface
         /// <param name="BookId">For particular book</param>
         /// <param name="model">For give the book data we want to update</param>
         /// <returns>return the book data updated book data</returns>
-        public Book UpdateBook(int BookId, AddBookModel model);
+        public BookDetailReturnModel UpdateBook(int BookId, AddBookModel model);
 
         /// <summary>
         /// For delete the book
         /// </summary>
         /// <param name="bookId">for access particular book</param>
         /// <returns>return the deleted book data</returns>
-        public Book DeleteBook(int bookId);
+        public BookDetailReturnModel DeleteBook(int bookId);
 
         /// <summary>
         /// For get all book 
         /// </summary>
         /// <returns>return the all book data</returns>
-        public List<AddBookModel> GetAllBook();
+        public List<BookDetailReturnModel> GetAllBook();
     }
 }

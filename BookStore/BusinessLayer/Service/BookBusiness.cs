@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using CommonLayer.ReturnModel;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
 using System;
@@ -30,7 +31,7 @@ namespace BusinessLayer.Service
 		/// </summary>
 		/// <param name="model">Provide the data enter in book table</param>
 		/// <returns>return book data which we enter in book table</returns>
-        public AddBookModel AddBook(AddBookModel model)
+        public BookDetailReturnModel AddBook(AddBookModel model)
         {
 			try
 			{
@@ -47,7 +48,7 @@ namespace BusinessLayer.Service
 		/// </summary>
 		/// <param name="BookId">For accessing particular book</param>
 		/// <returns>return the data of book from datatbase</returns>
-        public Book GetBook(int BookId)
+        public BookDetailReturnModel GetBook(int BookId)
 		{
 			try
 			{
@@ -66,7 +67,7 @@ namespace BusinessLayer.Service
 		/// <param name="model">For provide the data</param>
 		/// <returns>return the updated book detail</returns>
 
-        public Book UpdateBook(int BookId, AddBookModel model)
+        public BookDetailReturnModel UpdateBook(int BookId, AddBookModel model)
 		{
 			try
 			{
@@ -83,7 +84,7 @@ namespace BusinessLayer.Service
 		/// </summary>
 		/// <param name="bookId">For accessing the particular book</param>
 		/// <returns>return the deleted book data</returns>
-        public Book DeleteBook(int bookId)
+        public BookDetailReturnModel DeleteBook(int bookId)
 		{
 			try
 			{
@@ -99,7 +100,7 @@ namespace BusinessLayer.Service
 		/// Implement all book detail
 		/// </summary>
 		/// <returns>return all book data</returns>
-        public List<AddBookModel> GetAllBook()
+        public List<BookDetailReturnModel> GetAllBook()
 		{
 			try
 			{
