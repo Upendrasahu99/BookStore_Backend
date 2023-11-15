@@ -82,6 +82,12 @@ namespace RepoLayer.Service
             }
         }
 
+
+        /// <summary>
+        /// This method is Implemented GetAllAddress functionality where it access and return all the address of particular user.
+        /// </summary>
+        /// <param name="userId">for chose particular user</param>
+        /// <returns>Return all the address</returns>
         public List<AddressDetail> GetAllAddress(int userId)
         {
             try
@@ -96,6 +102,7 @@ namespace RepoLayer.Service
                     }
                     return addressDetailsList;
                 }
+                return null;
             }
             catch (Exception)
             {

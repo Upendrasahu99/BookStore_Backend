@@ -39,13 +39,12 @@ namespace BookStore
         public void ConfigureServices(IServiceCollection services)
         {
             //Database Configuration
-            services.AddSingleton<BookStoreContext>();
             services.AddDbContext<BookStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookStoreDBConnection")));
 
             services.AddControllers();
 
-            services.AddSingleton<IUserBusiness, UserBusiness>();
-            services.AddSingleton<IUserRepo, UserRepo>();
+            services.AddScoped<IUserBusiness, UserBusiness>();
+            services.AddScoped<IUserRepo, UserRepo>();
 
             services.AddScoped<IBookBusiness, BookBusiness>();
             services.AddScoped<IBookRepo, BookRepo>();
