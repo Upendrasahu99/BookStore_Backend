@@ -53,7 +53,7 @@ namespace BookStore.Controllers
         /// <param name="addressId">for access particular address from table</param>
         /// <returns>status code and if result not null get result data</returns>
         [Authorize]
-        [HttpGet("Get")]
+        [HttpGet("Get/{addressId}")]
         public IActionResult GetAddress(int addressId)
         {
             try
@@ -63,6 +63,31 @@ namespace BookStore.Controllers
                 if (result != null)
                 {
                     return Ok(new { success = true, message = "Address Detail", result = result });
+                }
+                return BadRequest(new { success = false, message = "Address not found" });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
+
+        /// <summary>
+        /// Action method for get all address of particular user
+        /// </summary>
+        /// <returns>Status code and if result not null get result data</returns>
+        [Authorize]
+        [HttpGet("GetAll")]
+        public IActionResult GetAllAddress()
+        {
+            try
+            {
+                int userId = Convert.ToInt32(User.FindFirst("UserId").Value);
+                var result = addressBusiness.GetAllAddress(userId);
+                if(result != null)
+                {
+                    return Ok(new { success = true, message = "All address", result = result });
                 }
                 return BadRequest(new { success = false, message = "Address not found" });
             }

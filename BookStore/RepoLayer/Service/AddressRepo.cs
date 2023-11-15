@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Model;
+using CommonLayer.ReturnModel;
 using RepoLayer.Context;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
@@ -45,6 +46,60 @@ namespace RepoLayer.Service
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This method implement get address where it check by addressId and userId is address is in the address table or not. 
+        /// </summary>
+        /// <param name="userId">for access particular user</param>
+        /// <param name="addressId">for particular access particular address of user</param>
+        /// <returns>return address detail</returns>
+        public AddressDetail GetAddress(int userId, int addressId) 
+        {
+            try
+            {
+                Address address = context.Address.SingleOrDefault(u => u.AddressId == addressId && u.UserId == userId);
+                if(address != null)
+                {
+                    AddressDetail addressDetail = new AddressDetail();
+                    addressDetail.AddressId = addressId;
+                    addressDetail.UserId = userId;
+                    addressDetail.FullAddress = address.FullAddress;
+                    addressDetail.City = address.City;
+                    addressDetail.PinCode = address.PinCode;
+                    addressDetail.State = address.State;
+                    address.Country = address.Country;
+                    return addressDetail;
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<AddressDetail> GetAllAddress(int userId)
+        {
+            try
+            {
+                List<AddressDetail> addressDetailsList = new List<AddressDetail>();
+                List<Address> allAddress = context.Address.Where(u => u.UserId == userId).ToList();
+                if(allAddress != null)
+                {
+                    foreach(Address address in allAddress)
+                    {
+                        addressDetailsList.Add(GetAddress(userId, address.AddressId));
+                    }
+                    return addressDetailsList;
+                }
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }
