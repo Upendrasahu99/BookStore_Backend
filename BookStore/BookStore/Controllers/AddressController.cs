@@ -46,5 +46,31 @@ namespace BookStore.Controllers
                 return StatusCode(500, "Internal Server Error");
             }
         }
+
+        /// <summary>
+        /// Action method for get the particular address of user
+        /// </summary>
+        /// <param name="addressId">for access particular address from table</param>
+        /// <returns>status code and if result not null get result data</returns>
+        [Authorize]
+        [HttpGet("Get")]
+        public IActionResult GetAddress(int addressId)
+        {
+            try
+            {
+                int userId = Convert.ToInt32(User.FindFirst("UserId").Value);
+                var result = addressBusiness.GetAddress(userId, addressId);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Address Detail", result = result });
+                }
+                return BadRequest(new { success = false, message = "Address not found" });
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+                return StatusCode(500, "Internal Server Error");
+            }
+        }
     }
 }

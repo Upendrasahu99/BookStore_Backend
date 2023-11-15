@@ -39,12 +39,13 @@ namespace BookStore
         public void ConfigureServices(IServiceCollection services)
         {
             //Database Configuration
+            services.AddSingleton<BookStoreContext>();
             services.AddDbContext<BookStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BookStoreDBConnection")));
 
             services.AddControllers();
 
             services.AddSingleton<IUserBusiness, UserBusiness>();
-            services.AddScoped<IUserRepo, UserRepo>();
+            services.AddSingleton<IUserRepo, UserRepo>();
 
             services.AddScoped<IBookBusiness, BookBusiness>();
             services.AddScoped<IBookRepo, BookRepo>();
@@ -58,7 +59,24 @@ namespace BookStore
             //Swagger Configuration
             services.AddSwaggerGen(option =>
             {
-                option.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                option.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Book Store",
+                    Version = "1.0",
+                    Description = "Book Store Api",
+                    TermsOfService = new Uri("https://swagger.io/specification/"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Upendra Sahu",
+                        Email = "upendrasahu1199@gmail.com",
+                        Url = new Uri("https://twitter.com/UPENDRA79252805"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Upendra Sahu",
+                        Url = new Uri("https://github.com/Upendrasahu99"),
+                    },
+                });
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Scheme = "Bearer",//Jwt format is Bearer
@@ -79,26 +97,9 @@ namespace BookStore
                                 Type = ReferenceType.SecurityScheme
                             }
                         },
-                         new List<string>()
+                         new List<string>() // Empty list String not require any specific scopes for access. The user only needs to provide a valid JWT token (Bearer authentication).
                     },
                 });
-                /* var securitySchema = new OpenApiSecurityScheme
-                 {
-                     Description = "Using the Authorization header with Bearer scheme",
-                     Name = "Authorization",
-                     In = ParameterLocation.Header,
-                     Type = SecuritySchemeType.Http,
-                     Scheme = "bearer",
-                     BearerFormat = "JWT",
-                     Reference = new OpenApiReference
-                     {
-                         Type = ReferenceType.SecurityScheme,
-                         Id = JwtBearerDefaults.AuthenticationScheme
-                     }
-                 };
-                 option.AddSecurityDefinition(securitySchema.Reference.Id, securitySchema);
-                 option.AddSecurityRequirement(new OpenApiSecurityRequirement { {
-                     securitySchema, Array.Empty<string>()}});*/
             });
 
             //Jwt Configuration
@@ -115,6 +116,7 @@ namespace BookStore
                     };
                 });
 
+            //Logging Provider and Nlog Configuration
             services.AddLogging(config =>
             {
                 config.ClearProviders();
