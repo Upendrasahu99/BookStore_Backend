@@ -35,8 +35,7 @@ namespace RepoLayer.Service
             try
             { 
                 Users users = new Users();
-                users.FirstName = model.FirstName;
-                users.LastName = model.LastName;
+                users.FullName = model.FullName;
                 users.MobileNum = model.MobileNum;
                 users.Email = model.Email;
                 users.Password = model.Password;
@@ -144,8 +143,7 @@ namespace RepoLayer.Service
                 if(user != null)
                 {
                     UserDetailReturn userDetailReturn = new UserDetailReturn();
-                    userDetailReturn.FirstName = user.FirstName;
-                    userDetailReturn.LastName = user.LastName;
+                    userDetailReturn.FullName = user.FullName;
                     userDetailReturn.MobileNum = user.MobileNum;
                     userDetailReturn.Password = user.Password;
                     return userDetailReturn;

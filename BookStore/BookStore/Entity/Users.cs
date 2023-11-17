@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RepoLayer.Entity
+namespace BookStore.Entity
 {
     public partial class Users
     {

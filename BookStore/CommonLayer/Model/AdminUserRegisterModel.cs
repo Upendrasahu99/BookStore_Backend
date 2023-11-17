@@ -6,8 +6,7 @@ namespace CommonLayer.Model
 {
     public class AdminUserRegisterModel
     {
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
+        public String FullName { get; set; }
         public string MobileNum { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
