@@ -92,7 +92,8 @@ namespace RepoLayer.Service
                 Users user = context.Users.SingleOrDefault(u => u.Email == email);
                 if(user != null)
                 {
-                    return GenerateToken(user.Email, user.UserId, user.Role);
+                    int id = 0;
+                    return GenerateToken(user.Email, id, user.Role);
                 }
                 return null;
             }
@@ -143,7 +144,7 @@ namespace RepoLayer.Service
                 if(user != null)
                 {
                     UserDetailReturn userDetailReturn = new UserDetailReturn();
-                    userDetailReturn.FullName = user.FullName;
+                    userDetailReturn.FirstName = user.FullName;
                     userDetailReturn.MobileNum = user.MobileNum;
                     userDetailReturn.Password = user.Password;
                     return userDetailReturn;
